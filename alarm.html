@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alarm</title>
+</head>
+<body>
+    <h1 id="time"></h1>
+    <input id="inputD" type="datetime-local">
+    <button id="set" onclick="setAlarm()">Set Alarm </button>
+    <h1 id="alarmTime"></h1>
+</body>
+
+<script>    
+    let time = document.getElementById('time');
+    let inputD = document.getElementById('inputD');
+    setInterval(() => {
+        time.innerText = `Current Time => ${new Date().toLocaleTimeString()}`;
+    },1000)
+
+    function setAlarm(){
+        // console.log(time.innerText);
+        // console.log(inputD.value);
+        document.getElementById('alarmTime').innerText = inputD.value;
+        let alarmTime = document.getElementById('alarmTime');
+
+    }
+    
+</script>
+</html>

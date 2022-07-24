@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timer</title>
+</head>
+<style>
+    body{
+        background-color: darkgray;
+        text-align: center;
+        margin-top: 10%;
+    }
+    h1{
+        font-size: 90px;
+    }
+    input {
+        width: 80px;
+        height: 60px;
+        border-radius: 16px;
+        border: 2px solid gray;
+        color: rgb(39, 39, 39);
+        background-color: rgb(202, 202, 202);
+        font-size: 40px;
+        text-align: center;
+    }
+    button{
+        width: fit-content;
+        height: auto;
+        border-radius: 12px;
+        border: 5px solid gray;
+        color: rgb(30, 27, 27);
+        background-color: rgb(103, 134, 156);
+        font-size: 30px;
+        text-align: center;
+        font-weight: bolder;
+    }
+    div{
+        text-align: center;
+        font-size: 50px;
+        text-align: center;
+        font-weight: bolder;
+        margin-bottom: 10px;
+    }
+
+
+</style>
+<body>
+    <h1>Timer</h1>
+    <div><span id="mmm"><input id="mm" type="number" max="60" min="0" placeholder="MM"></span> : <span id="sss"><input id="ss" type="number" max="60" min="0" placeholder="SS"></span></div>
+    <div id="show"></div>
+    <div><button type="button" id="start" onclick="Timer()"> Start </button> <button type="reset" id="reset" onclick="resetTimer()"> Reset </button></div>
+</body>
+
+<script>
+
+    function resetTimer(){
+        window.location.href = `timer2.html`;
+    }
+
+
+    function Timer() {
+
+
+        let tmin = document.getElementById('mm');
+        let tsec = document.getElementById('ss');
+        console.log(tmin.value,tsec.value,'value')
+        console.log(tmin.innerText,tsec.innerText,'text');
+        if((tmin.value > 60 || tmin.value < 0) || (tsec.value > 60 || tsec.value < 0) || tsec.value == '' ||  tmin.value == ''){
+            console.log('reading')
+            document.getElementById('show').innerText = 'invalid time..';
+            document.getElementById('show').style.backgroundColor = 'red'
+            setTimeout(() => {
+                window.location.href = `timer2.html`;
+            },2000);
+            return;
+        }
+
+        let minutesRemain = +tmin.value;
+        let secondsRemain = +tsec.value;
+
+    let runTimer = setInterval(() => {
+
+            secondsRemain = secondsRemain - 1;
+            document.getElementById('mmm').innerText = minutesRemain;
+            document.getElementById('sss').innerText = secondsRemain;
+
+            if(minutesRemain <= 0 && secondsRemain <= 0){
+                playAudio();
+                clearInterval(runTimer);
+                setTimeout(() => {
+                    window.location.href = `timer2.html`;
+                },8000);
+            }
+
+            if(secondsRemain <= 0 && minutesRemain > 0){
+                minutesRemain = minutesRemain - 1;
+                secondsRemain = 59;
+                document.getElementById('mmm').innerText = minutesRemain;
+                document.getElementById('sss').innerText = secondsRemain;
+            }
+        },1000);
+
+        
+        
+}
+
+function playAudio(){
+    let timerAudio = new Audio('audios/alarm.mp3');
+    timerAudio.play();
+}
+
+
+    
+</script>
+</html>

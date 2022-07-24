@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stopwatch </title>
+    <style>
+        body{
+        margin-top: 50px;
+        background-color: darkgray;
+        margin-top: 20%;
+        }
+        button{
+            width: 60px;
+            height: 40px;
+            font-size: 15px;
+            border-radius: 12px;
+            border: 2px solid rgb(156, 84, 84);
+        }
+        table{
+            text-align: center;
+        }
+        tr,td{
+            text-align: center;
+            border: 2px solid black;
+            width: fit-content;
+            height: auto;
+            font-size: 25px;
+        }
+    </style>
+</head>
+<body>
+    <center>
+    <h1>Stopwatch</h1>
+    <h1 id="theTime"><span id="mm">00</span>:<span id="ss">00</span>:<span id="ms">00</span> <h1>
+    <button id="start" onclick="startTime()"> Start </button>
+    <button id="pause" onclick="pauseIt()"> Pause </button>
+    <button id="stop" onclick="stopIt()">Stop </button>
+    <button id="reset" type="reset" onclick="resetIt()"> Reset </button>
+    </center>
+    <table  id="tablebody" style="margin: auto;">
+    </table>
+    
+    
+
+
+    <script>
+
+        let clearIt = false;
+        function stopIt(){
+            clearIt = true;
+        }
+
+
+        function resetIt() {
+            window.location.href = `stopwatch.html`;
+        }
+        let pp = 1;
+        function pauseIt(){
+                let ms = document.getElementById('ms').innerText; 
+                let ss = document.getElementById('ss').innerText;
+                let mm = document.getElementById('mm').innerText;
+                // document.getElementById('theTime').innerText = `${mm} : ${ss} : ${ms}`;
+                let tbody = document.getElementById('tablebody');
+                let tr = document.createElement('tr');
+                let td = document.createElement('td');
+                td.innerText = `(Player-${pp})  ${mm} : ${ss} : ${ms}`
+                pp+=1;
+                tbody.appendChild(tr);
+                tr.appendChild(td);
+        }
+
+        
+        
+        function startTime(){
+            let microseconds = document.getElementById('ms').innerText; 
+            let seconds = document.getElementById('ss').innerText;
+            let minutes = document.getElementById('mm').innerText;
+
+            let begin = setInterval(() => {
+                if(clearIt == true){
+                    clearInterval(begin);
+                }
+                microseconds < 9 ? microseconds = '0' + (+microseconds + 1) : microseconds = (+microseconds + 1);
+                console.log(microseconds);
+                // microseconds = microseconds + 1 + '';
+                document.getElementById('ms').innerText = microseconds;
+                document.getElementById('ss').innerText = seconds;
+                document.getElementById('mm').innerText = minutes;
+
+                
+
+                if(microseconds >= 100){
+                    microseconds = '00';
+                    seconds < 9 ? seconds = '0' + (+seconds + 1) : seconds = (+seconds + 1) + '';
+                    // seconds = seconds + 1;
+                    document.getElementById('ms').innerText = microseconds;
+                    document.getElementById('ss').innerText = seconds;
+                    document.getElementById('mm').innerText = minutes;
+                    
+
+                    if(seconds > 59){
+                        seconds = '00';
+                        minutes < 9 ? minutes = '0' + (+minutes + 1) : minutes = (+minutes + 1) + '';
+                        // minutes = minutes + 1;
+                        document.getElementById('ms').innerText = microseconds;
+                        document.getElementById('ss').innerText = seconds;
+                        document.getElementById('mm').innerText = minutes;
+
+                        if(minutes > 59){
+                            clearInterval(begin);
+                        }
+                    }
+                }
+            },10)
+        }
+    </script>
+</body>
+</html>
