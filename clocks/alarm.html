@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,17 +9,23 @@
     <title>Alarm</title>
 </head>
 <style>
-    body{
+    body {
         background-color: rgb(213, 205, 221);
         font-family: cursive;
+        margin-top: 15%;
     }
-    h1{
+
+    h1 {
         font-size: 80px;
     }
+
     h2 {
         font-size: 40px;
     }
-    input,button,select{
+
+    input,
+    button,
+    select {
         width: fit-content;
         height: 30px;
         /* border: rgb(199, 171, 225) solid 2px; */
@@ -28,14 +35,18 @@
         font-family: cursive;
         border: none;
     }
-    select,option{
+
+    select,
+    option {
         width: 60px;
-        height: 35px;   
+        height: 35px;
     }
-    #ampm{
+
+    #ampm {
         margin-right: 20px;
     }
 </style>
+
 <body>
     <center>
         <h1>Alarm Clock </h1>
@@ -47,8 +58,8 @@
             <option>AM</option>
             <option>PM</option>
         </select>
-
-        <button id="set" onclick="setAlarm()">Set Alarm </button>
+        <br />
+        <button id="set" onclick="setAlarm()" style="margin-top: 5px;">Set Alarm </button>
         <button id="reset" onclick="resetIt()">Reset</button>
         <h1 id="alarmTime"></h1>
     </center>
@@ -57,109 +68,102 @@
 
 <script>
 
-// Creating dropdown for 1 to 12 Hours 
+    // Creating dropdown for 1 to 12 Hours 
 
-let createHH = document.getElementById('hourzz');
-for(let i = 1; i <= 12; i++){
-    let option = document.createElement('option');
-    option.innerText = i;
-    createHH.appendChild(option);
-}
+    let createHH = document.getElementById('hourzz');
+    for (let i = 1; i <= 12; i++) {
+        let option = document.createElement('option');
+        option.innerText = i;
+        createHH.appendChild(option);
+    }
 
-//Creating dropdown for 0 to 60 mins
+    //Creating dropdown for 0 to 60 mins
 
-let createMM = document.getElementById('minzz');
-for(let j = 0; j <= 60; j++){
-    let option2 = document.createElement('option');
-    option2.innerText = j;
-    createMM.appendChild(option2);
-}
+    let createMM = document.getElementById('minzz');
+    for (let j = 0; j <= 60; j++) {
+        let option2 = document.createElement('option');
+        option2.innerText = j;
+        createMM.appendChild(option2);
+    }
 
-// Reset button
-function resetIt() {
-            window.location.href = `alarm.html`;
-}
+    // Reset button
+    function resetIt() {
+        window.location.href = `alarm.html`;
+    }
 
-// Set alarm function
-    
-    function setAlarm(){
-        
+    // Set alarm function
+
+    function setAlarm() {
+
         // creating alarm object and values in local storage
 
         let inM = +document.getElementById('minzz').value;
         let inH = +document.getElementById('hourzz').value;
         let amPm = +document.getElementById('ampm').value;
-        let alarmTwentyFour = twelveTo24(inH,inM,amPm);
+        let alarmTwentyFour = twelveTo24(inH, inM, amPm);
         localStorage.setItem('alarm', alarmTwentyFour);
 
         setTimeout(() => {
             window.location.href = `alarm.html`;
-        },2000);
+        }, 2000);
     }
 
     // if there will be some object with alarm key
-        
-        if(localStorage.getItem('alarm') !== null){
-            console.log('yes we have something')
 
-            let myAlarm = setInterval(() => {
+    if (localStorage.getItem('alarm') !== null) {
+        let myAlarm = setInterval(() => {
 
-            let  inputHours = localStorage.getItem('alarm').split(',')[0];
+            let inputHours = localStorage.getItem('alarm').split(',')[0];
             let inputMinutes = localStorage.getItem('alarm').split(',')[1];
-            
+
             let currHours = new Date().getHours();
             let currMinutes = new Date().getMinutes();
 
-            console.log(inputHours,inputMinutes);
-            console.log(currHours,currMinutes);
-
-            if(+inputHours == currHours && +inputMinutes == currMinutes){
-                console.log('ringing');
+            if (+inputHours == currHours && +inputMinutes == currMinutes) {
                 clearInterval(myAlarm);
                 ringAlarm();
             }
-        },1000);
-        }
-        
+        }, 1000);
+    }
+
     // ring alarm logic and local storage object remove
-    
-    function ringAlarm(){
-        console.log('started');
+
+    function ringAlarm() {
         let counter = 100;
         let myAudio = new Audio('audios/alarm.mp3');
-        let tringTring = setInterval (() => {
-            console.log(counter);
+        let tringTring = setInterval(() => {
             counter = counter + 7500;
-            if(counter >= 30000){
+            if (counter >= 30000) {
                 clearInterval(tringTring);
                 localStorage.removeItem('alarm');
             }
             myAudio.play();
         }, 7500);
-        
+
     }
 
     // function to convert 12 to 24 hours string 
 
-    function twelveTo24(ih,im,ap){
-        let h24,arr;
-        if(ap == 'AM'){
-            if(ih == 12){
+    function twelveTo24(ih, im, ap) {
+        let h24, arr;
+        if (ap == 'AM') {
+            if (ih == 12) {
                 h24 = 0;
-            } else{
+            } else {
                 h24 = ih;
             }
         }
         else {
-            if(ih == 12){
+            if (ih == 12) {
                 h24 = ih;
             } else {
                 h24 = ih + 12;
             }
         }
-        arr = [h24,im]
+        arr = [h24, im]
         return arr;
     }
-    
+
 </script>
+
 </html>
