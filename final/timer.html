@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
     <title>Timer</title>
 </head>
 <style>
@@ -56,7 +57,7 @@
 <script>
 
     function resetTimer(){
-        window.location.href = `timer2.html`;
+        window.location.href = `timer.html`;
     }
 
 
@@ -72,7 +73,7 @@
             document.getElementById('show').innerText = 'invalid time..';
             document.getElementById('show').style.backgroundColor = 'red'
             setTimeout(() => {
-                window.location.href = `timer2.html`;
+                window.location.href = `timer.html`;
             },2000);
             return;
         }
@@ -90,7 +91,7 @@
                 playAudio();
                 clearInterval(runTimer);
                 setTimeout(() => {
-                    window.location.href = `timer2.html`;
+                    window.location.href = `timer.html`;
                 },8000);
             }
 
@@ -101,9 +102,6 @@
                 document.getElementById('sss').innerText = secondsRemain;
             }
         },1000);
-
-        
-        
 }
 
 function playAudio(){
